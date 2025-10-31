@@ -20,6 +20,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
+  
   s3:
     restart: always
     image: minio/minio
@@ -45,6 +46,22 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
+  
+  create_buckets:
+    image: minio/mc
+    container_name: mlflow_create_buckets
+    depends_on:
+      - s3
+    networks:
+      - backend
+    entrypoint: >
+      /bin/sh -c '
+      sleep 5;
+      /usr/bin/mc config host add s3 http://s3:${MINIO_PORT} ${MINIO_ACCESS_KEY} ${MINIO_SECRET_ACCESS_KEY} --api S3v4;
+      [[ ! -z "`/usr/bin/mc ls s3 | grep challenge`" ]] || /usr/bin/mc mb s3/${MLFLOW_BUCKET_NAME};
+      /usr/bin/mc policy download s3/${MLFLOW_BUCKET_NAME};
+      exit 0;
+      '
 
   tracking_server:
     restart: always
@@ -75,12 +92,12 @@ services:
       timeout: 10s
       retries: 3
 
-  volumes:
-    db_data:
-    minio_data:
+volumes:
+  db_data:
+  minio_data:
 
-  networks:
-    frontend:
-      driver: bridge
-    backend:
-      driver: bridge
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
