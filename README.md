@@ -24,7 +24,7 @@ MLflow поддерживает множество фреймворков маш
 PG_USER=mlflow
 PG_PASSWORD=mlflow
 PG_DATABASE=mlflow
-MLFLOW_BUCKET_NAME=mlfow-bucket
+MLFLOW_BUCKET_NAME=mlflow-bucket
 MINIO_ROOT_USER=admin
 MINIO_ROOT_PASSWORD=admin1234
 MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
@@ -47,3 +47,8 @@ docker compose up -d
 * на `http://localhost:5050/` будет доступен GUI MLFlow;
 
 ---
+
+### Предостережения
+
+1. Проверьте правила хоста на разрешение соединений
+2. Не используйте прокси при подключении к MLFlow 
