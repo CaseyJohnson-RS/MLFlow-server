@@ -21,16 +21,28 @@ MLflow поддерживает множество фреймворков маш
 Создайте файлик `.env`, в который добавьте примерно следующее:
 
 ```bash
+# Postgres configuration
 PG_USER=mlflow
 PG_PASSWORD=mlflow
 PG_DATABASE=mlflow
-MLFLOW_BUCKET_NAME=mlflow-bucket
-MINIO_ROOT_USER=admin
-MINIO_ROOT_PASSWORD=admin1234
-MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
-MLFLOW_TRACKING_URL=http://localhost:5000
-MLFLOW_AWS_ACCESS_KEY_ID=qwerTY12345
-MLFLOW_AWS_SECRET_ACCESS_KEY=poIuytRewq0987654321qwerty
+PG_PORT=5432
+
+# MLflow configuration
+MLFLOW_PORT=5001
+MLFLOW_BUCKET_NAME=mlflow
+
+# MinIO access keys - these are needed by MLflow
+MINIO_ACCESS_KEY=NetzYOidILbYfa31Re9w
+MINIO_SECRET_ACCESS_KEY=x66YtbX5xPrDQKvvr9IS7SAUJ3zaCpbl2MqP6MGk
+
+# MinIO configuration
+MINIO_ROOT_USER: 'minio_user'
+MINIO_ROOT_PASSWORD: 'minio_pwd'
+MINIO_ADDRESS: ':9000'
+MINIO_STORAGE_USE_HTTPS: False
+MINIO_CONSOLE_ADDRESS: ':9001'
+MINIO_PORT=9000
+MINIO_CONSOLE_PORT=9001
 ```
 
 ### Запуск сервисов
